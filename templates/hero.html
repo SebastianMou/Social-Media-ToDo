@@ -3,14 +3,110 @@
 
 {% block content %}
 <style>
-    .card-body {
-        background-color: rgba(255, 255, 255, 0.5); 
+    .hero-section {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+        text-align: center;
     }
-    </style>
-    
-<div class="card">
-    <div class="card-body">
-        
+    .features-section, .testimonials-section, .footer-section {
+        padding: 60px 0;
+        text-align: center;
+    }
+    .footer-section {
+        background-color: #343a40;
+        color: #ffffff;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="container-fluid hero-section">
+    <div class="container">
+        <h1 class="display-4">Your Ultimate Task Management Solution</h1>
+        <p class="lead">Organize your tasks, set your goals, and boost your productivity.</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a>
+        <div class="hero-image mt-4">
+        </div>
+    </div>
+</div>
+
+<!-- Overview Section -->
+<div class="container-fluid overview-section">
+    <div class="container">
+        <h2>Overview</h2>
+        <p>Our task management platform helps you organize your tasks, track your goals, and enhance your productivity. With easy-to-use features and AI-driven recommendations, managing your daily activities has never been easier.</p>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container-fluid features-section">
+    <div class="container">
+        <h2>Key Features</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1692158961403-4d2a98e9878e?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Task Management">
+                    <div class="card-body">
+                        <h5 class="card-title">Task Management</h5>
+                        <p class="card-text">Create, edit, and manage your tasks with ease. Prioritize your tasks and get reminders to stay on track.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1654195131868-cac1d8429d86?q=80&w=1773&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Goal Tracking">
+                    <div class="card-body">
+                        <h5 class="card-title">Goal Tracking</h5>
+                        <p class="card-text">Set and track your goals. Monitor your progress and achieve your objectives.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1529651737248-dad5e287768e?q=80&w=1065&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Productivity Insights">
+                    <div class="card-body">
+                        <h5 class="card-title">Productivity Insights</h5>
+                        <p class="card-text">Get insights into your productivity patterns. Optimize your workflow with AI-based recommendations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="container-fluid testimonials-section">
+    <div class="container">
+        <h2>What Our Users Say</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p class="mb-0">"This platform has significantly improved my productivity and task management."</p>
+                    <hr>
+                    <footer class="blockquote-footer">User 1</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p class="mb-0">"I love the goal tracking feature. It helps me stay focused on my objectives."</p>
+                    <hr>
+                    <footer class="blockquote-footer">User 2</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p class="mb-0">"The AI recommendations are very helpful in optimizing my daily tasks."</p>
+                    <hr>
+                    <footer class="blockquote-footer">User 3</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<div class="container-fluid footer-section">
+    <div class="container">
+        <p>&copy; 2024 Task Management Platform. All rights reserved.</p>
     </div>
 </div>
 {% endblock %}
