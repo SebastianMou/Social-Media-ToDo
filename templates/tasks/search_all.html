@@ -1,0 +1,31 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <form class="d-flex mb-4" method="POST">
+        {% csrf_token %}
+        <input name="searched" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+    <p class="text-muted">You searched: {{ searched }}</p>
+
+    {% if searched %}
+        <h3 class="mb-4">Results for: {{ searched }}</h3>
+        {% for task in tasks %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'task_detail' task.pk %}">{{ task.title }} - {{ task.owner.username }}</a></h5>
+                    <span class="badge rounded-pill bg-{{ task.publ_or_priv|yesno:"success,secondary" }}">{{ task.publ_or_priv|yesno:"Public,Private" }}</span>
+                    <p class="card-text mt-2">{{ task.created_at }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-warning">No tasks found.</p>
+        {% endfor %}
+    {% else %}
+        <p class="text-info">Enter a search term to find public tasks.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .c-b {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        /* Adjust the gap between elements */
+        padding: 10px;
+        border: 1px solid #ccc;
+        /* Optional: border for the card body */
+        background-color: rgba(255, 255, 255, 0.5);
+        /* Optional: semi-transparent background */
+    }
+
+    .c-b p {
+        margin: 0;
+        /* Remove default margin from paragraphs */
+    }
+
+    .dropdown {
+        margin-left: auto;
+        /* Push the icon to the far right */
+    }
+    #input-box {
+        margin-bottom: 12px;
+    }
+</style>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'link image code',
+        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+    });
+</script>
+<div class="card">
+    <div class="card-body">
+        <div style="margin-bottom: 7px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-fill"
+                viewBox="0 0 16 16">
+                <path
+                    d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3m-8.322.12q.322-.119.684-.12h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981z" />
+            </svg> {{ task_folder }}
+        </div>
+        <form action="" method="POST">
+            <div class="input-group">
+                {% csrf_token %}
+                {{ form.title }}
+                <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Add task</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add full Task
+                </button>
+            </div>
+        </form>
+        
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Complete</th>
+                    <th scope="col"></th>
+                    <th scope="col">Visibility</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td colspan="2"> <!-- Combine checkbox and title in one column -->
+                        <form action="{% url 'toggle_task_completion' task.pk %}" method="POST" style="display: inline; padding: 12px;">
+                            {% csrf_token %}
+                            <input type="checkbox" onChange="this.form.submit()" {% if task.completed %}checked{% endif %} />
+                        </form>
+                        <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+                    </td>
+                    <td>
+                        <span class="badge rounded-pill bg-secondary">{{ task.publ_or_priv|yesno:"Public,Private" }}</span>
+                    </td>
+                    <td class="text-end"> <!-- Aligns content to the right -->
+                        <div class="dropdown">
+                            <button class="btn btn-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="{% url 'task_edit' task.pk %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                                    </svg> Edit
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'task_delete' task.pk %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                    </svg> Delete
+                                </a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        
+
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create full task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div id="input-box">
+                        {{ form.title }}
+                    </div>
+                    <div id="input-box">
+                        {{ form.completion_date }}
+                    </div>
+                    <div id="input-box">
+                        {{ form.completion_time }}
+                    </div>
+                    <div id="input-box">
+                        {{ form.description }}
+                        {{ form.media }}
+                    </div>
+                    <div id="input-box">
+                        <label for="publ_or_priv">this will make you task public:</label>
+                        {{ form.publ_or_priv }}
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add Task</button>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+{% endblock %}

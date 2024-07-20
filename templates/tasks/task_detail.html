@@ -1,0 +1,35 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{{ task.title }}</h1>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ task.description|safe }}</p>
+            <table class="table table-bordered mt-4">
+                <tbody>
+                    <tr>
+                        <th scope="row">Completed</th>
+                        <td><span class="badge bg-{{ task.completed|yesno:"success,danger" }}">{{ task.completed|yesno:"Yes,No" }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Completion Date</th>
+                        <td>{{ task.completion_date }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Completion Time</th>
+                        <td>{{ task.completion_time }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Public or Private</th>
+                        <td>{{ task.publ_or_priv|yesno:"Public,Private" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
