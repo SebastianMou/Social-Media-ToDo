@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Task, TaskFolder
 from .forms import TaskFolderForm, TaskForm, TaskSearchForm, UserRegisterForm
-
+#tests
 # Create your views here.
 def hero(request):
     return render(request, 'hero.html')
